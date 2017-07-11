@@ -25,7 +25,16 @@ restService.post('/mirror', function(req, res) {
             displayText: 'Welcome to birthday Intent',
             source: 'mirror-webhook-heroku'
         });
-    }else if (speech.valueOf()== NO_INTENT.valueOf()){
+    }
+    else if (speech.valueOf()== WELCOME.valueOf()){
+        return res.json({
+            speech: 'Welcome to Cantiz Mirror, you can find the Milestones, Birthdays, ' +
+            'and wedding anniversarys for today. So,  which feeds you would like to hear ?',
+            displayText: 'Welcome to Cantiz Mirror',
+            source: 'mirror-webhook-heroku'
+        });
+    }
+    else if (speech.valueOf()== NO_INTENT.valueOf()){
         return res.json({
             speech: 'Some problem with Google, please visit us again',
             displayText: 'Some problem with Google, please visit us again',
