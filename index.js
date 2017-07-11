@@ -3,6 +3,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const BIRTHDAYS = 'Birthday_Intent';
+const MILESTONES = 'Milestone_Intent';
+const ANNIVERSARY = 'Anniversay_Intent';
+const WELCOME = 'input.welcome';
+const NO_INTENT = 'no_intent';
+
 const restService = express();
 
 restService.use(bodyParser.urlencoded({
