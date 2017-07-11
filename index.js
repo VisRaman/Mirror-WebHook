@@ -11,13 +11,22 @@ restService.use(bodyParser.urlencoded({
 
 restService.use(bodyParser.json());
 
-restService.post('/birthdays', function(req, res) {
-    var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
-    return res.json({
-        speech: speech,
-        displayText: speech,
-        source: 'webhook-echo-sample'
-    });
+restService.post('/mirror', function(req, res) {
+    var speech = req.body.result && req.body.result.action ? req.body.result.action : NO_INTENT
+    if (speech.valueOf()== BIRTHDAYS.valueOf()){
+        return res.json({
+            speech: 'Welcome to birthday Intent',
+            displayText: 'Welcome to birthday Intent',
+            source: 'mirror-webhook-heroku'
+        });
+    }else if (speech.valueOf()== NO_INTENT.valueOf()){
+        return res.json({
+            speech: 'Some problem with Google, please visit us again',
+            displayText: 'Some problem with Google, please visit us again',
+            source: 'mirror-webhook-heroku'
+        });
+    }
+
 });
 
 restService.post('/slack-test', function(req, res) {
