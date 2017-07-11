@@ -1,0 +1,14 @@
+{
+  "name": "MIrror-Webhook",
+  "version": "1.0.0",
+  "description": "Webhook For Mirror Actions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Anantha Raman S M",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4"
+  }
+}
