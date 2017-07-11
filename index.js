@@ -18,6 +18,18 @@ restService.use(bodyParser.urlencoded({
 restService.use(bodyParser.json());
 
 restService.post('/mirror', function(req, res) {
+    var suggestion = [];
+    suggestion.push(
+    {
+        "title" : "Birthdays"
+    },
+    {
+        "title": "Milestones"
+    },
+    {
+        "title": "Wedding Anniversary"
+    }
+    );
     var speech = req.body.result && req.body.result.action ? req.body.result.action : NO_INTENT
     if (speech.valueOf()== BIRTHDAYS.valueOf()){
         return res.json({
@@ -31,6 +43,7 @@ restService.post('/mirror', function(req, res) {
             speech: 'Welcome to Cantiz Mirror, you can find the Milestones, Birthdays, ' +
             'and wedding anniversarys for today. So,  which feeds you would like to hear ?',
             displayText: 'Welcome to Cantiz Mirror',
+            suggestions: suggestion,
             source: 'mirror-webhook-heroku'
         });
     }
