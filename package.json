@@ -9,6 +9,7 @@
   "author": "Anantha Raman S M",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "request": "^2.81.0",
     "express": "^4.13.4"
   }
 }
