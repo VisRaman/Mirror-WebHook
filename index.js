@@ -148,10 +148,9 @@ function parseBirthdayResponse(body) {
     }
     else {
         var responseArr = JSON.parse(body);
-        let obj = {};
-        for (obj in responseArr) {
-            if (obj != null) {
-                resFinal = resFinal + ' ,' + obj.name;
+        for (var i = 0; i<responseArr.length; i++) {
+            if (responseArr[i] != null) {
+                resFinal = resFinal + responseArr[i].name + ' ,';
             }
         }
     }
