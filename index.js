@@ -34,7 +34,7 @@ restService.post('/mirror', function(req, res) {
     );
 
     var speech = req.body.result && req.body.result.action ? req.body.result.action : NO_INTENT;
-    
+
     if (speech.valueOf()== MILESTONES.valueOf()) {
         requestapp.get({
                 url: 'http://teamcantiz:megamirror156@stg.mirror.attinadsoftware.com:8080/milestones.json'
@@ -47,7 +47,43 @@ restService.post('/mirror', function(req, res) {
                     for (var key in resFinal) {
                         finalString = finalString + ' People celebrating ' + key + ' year milestone ';
                         resFinal[key].forEach(function (value) {
-                            finalString = finalString + value + ', \n';
+                            finalString = finalString + value + ', ';
+                        });
+                    }
+
+                    console.log('res final ' + finalString);
+
+                    return res.json({
+                        speech: finalString,
+                        displayText: finalString,
+                        source: 'mirror-webhook-heroku',
+                        suggestions: suggestion
+                    });
+                }
+                else {
+                    return res.json({
+                        speech: 'There are milestone feeds for today',
+                        displayText: 'There are milestone feeds for today',
+                        source: 'mirror-webhook-heroku',
+                        suggestions: suggestion
+                    });
+                }
+            });
+    }
+
+    else if (speech.valueOf()== ANNIVERSARY.valueOf()) {
+        requestapp.get({
+                url: 'http://teamcantiz:megamirror156@stg.mirror.attinadsoftware.com:8080/wedding_anniversaries.json'
+            },
+            function (request, response, body){
+
+                var resFinal = responseSerialization(body);
+                if (resFinal!=null) {
+                    var finalString ='';
+                    for (var key in resFinal) {
+                        finalString = finalString + ' People celebrating ' + key + ' year of happy married life ';
+                        resFinal[key].forEach(function (value) {
+                            finalString = finalString + value + ', ';
                         });
                     }
 
