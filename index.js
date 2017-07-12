@@ -20,7 +20,7 @@ restService.use(bodyParser.urlencoded({
 restService.use(bodyParser.json());
 
 restService.post('/mirror', function(req, res) {
-   /* var suggestion = [];
+    var suggestion = [];
     suggestion.push(
     {
         "title" : "Birthdays"
@@ -31,11 +31,11 @@ restService.post('/mirror', function(req, res) {
     {
         "title": "Wedding Anniversary"
     }
-    );*/
+    );
 
-    var speech = req.body.result && req.body.result.action ? req.body.result.action : NO_INTENT
-    if (speech.valueOf()== BIRTHDAYS.valueOf())
-    {
+    var speech = req.body.result && req.body.result.action ? req.body.result.action : NO_INTENT;
+    
+    if (speech.valueOf()== MILESTONES.valueOf()) {
         requestapp.get({
                 url: 'http://teamcantiz:megamirror156@stg.mirror.attinadsoftware.com:8080/milestones.json'
             },
@@ -56,20 +56,21 @@ restService.post('/mirror', function(req, res) {
                     return res.json({
                         speech: finalString,
                         displayText: finalString,
-                        source: 'mirror-webhook-heroku'
-                        //suggestions: suggestion
+                        source: 'mirror-webhook-heroku',
+                        suggestions: suggestion
                     });
                 }
                 else {
                     return res.json({
-                        speech: 'Welcome to birthday Intent',
-                        displayText: 'Welcome to birthday Intent',
-                        source: 'mirror-webhook-heroku'
-                        //suggestions: suggestion
+                        speech: 'There are milestone feeds for today',
+                        displayText: 'There are milestone feeds for today',
+                        source: 'mirror-webhook-heroku',
+                        suggestions: suggestion
                     });
                 }
             });
     }
+
     else if (speech.valueOf()== WELCOME.valueOf()){
         return res.json({
             speech: 'Welcome to Cantiz Mirror, you can find the Milestones, Birthdays, ' +
@@ -77,6 +78,31 @@ restService.post('/mirror', function(req, res) {
             displayText: 'Welcome to Cantiz Mirror',
             source: 'mirror-webhook-heroku'
         });
+    }
+
+    else if (speech.valueOf()== BIRTHDAYS.valueOf()) {
+        requestapp.get({
+                url: 'http://teamcantiz:megamirror156@stg.mirror.attinadsoftware.com:8080/birthdays.json'
+            },
+            function (request, response, body){
+
+                var resFinal = parseBirthdayResponse(body);
+               if (resFinal == ''){
+                   return res.json({
+                       speech: 'There are no birthday babies today',
+                       displayText: 'There are no birthday babies today',
+                       source: 'mirror-webhook-heroku',
+                       suggestions: suggestion
+                   });
+               }else{
+                   return res.json({
+                       speech: 'Todays birthday babies are ' + resFinal,
+                       displayText: 'Todays birthday babies are ' + resFinal,
+                       source: 'mirror-webhook-heroku',
+                       suggestions: suggestion
+                   });
+               }
+            });
     }
 
     else if (speech.valueOf()== NO_INTENT.valueOf()){
@@ -93,6 +119,7 @@ restService.post('/mirror', function(req, res) {
 restService.listen((process.env.PORT || 8000), function() {
     console.log("Server up and listening");
 });
+
 function responseSerialization(body)
 {
     var resFinal = {};
@@ -113,4 +140,20 @@ function responseSerialization(body)
     else {
         return null;
     }
+}
+
+function parseBirthdayResponse(body) {
+    var resFinal = '';
+    if (body == null) {
+    }
+    else {
+        var responseArr = JSON.parse(body);
+        let obj = {};
+        for (obj in responseArr) {
+            if (obj != null) {
+                resFinal = resFinal + ' ,' + obj.name;
+            }
+        }
+    }
+    return resFinal;
 }
