@@ -62,8 +62,8 @@ restService.post('/mirror', function(req, res) {
                 }
                 else {
                     return res.json({
-                        speech: 'There are milestone feeds for today',
-                        displayText: 'There are milestone feeds for today',
+                        speech: 'There are no milestone feeds for today',
+                        displayText: 'There are no milestone feeds for today',
                         source: 'mirror-webhook-heroku',
                         suggestions: suggestion
                     });
@@ -98,8 +98,8 @@ restService.post('/mirror', function(req, res) {
                 }
                 else {
                     return res.json({
-                        speech: 'There are milestone feeds for today',
-                        displayText: 'There are milestone feeds for today',
+                        speech: 'There are no wedding anniversary feeds for today',
+                        displayText: 'There are no wedding anniversary feeds for today',
                         source: 'mirror-webhook-heroku',
                         suggestions: suggestion
                     });
@@ -161,7 +161,7 @@ function responseSerialization(body)
     var resFinal = {};
     var jsonBody = JSON.parse(body);
     if (!Object.keys(jsonBody).length === 0) {
-        
+
         for (var key in jsonBody) {
             if (jsonBody[key] != null) {
                 var objArr = [];
