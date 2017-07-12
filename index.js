@@ -47,7 +47,7 @@ restService.post('/mirror', function(req, res) {
                     for (var key in resFinal) {
                         finalString = finalString + ' People celebrating ' + key + ' year milestone ';
                         resFinal[key].forEach(function (value) {
-                            finalString = finalString + value + ' ,';
+                            finalString = finalString + value + ', \n';
                         });
                     }
 
@@ -150,7 +150,7 @@ function parseBirthdayResponse(body) {
         var responseArr = JSON.parse(body);
         for (var i = 0; i<responseArr.length; i++) {
             if (responseArr[i] != null) {
-                resFinal = resFinal + responseArr[i].name + ' ,';
+                resFinal = resFinal + responseArr[i].name + ', \n';
             }
         }
     }
