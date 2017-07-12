@@ -186,7 +186,7 @@ function parseBirthdayResponse(body) {
         var responseArr = JSON.parse(body);
         for (var i = 0; i<responseArr.length; i++) {
             if (responseArr[i] != null) {
-                resFinal = resFinal + responseArr[i].name + ', \n';
+                resFinal = resFinal + responseArr[i].name + ', ';
             }
         }
     }
