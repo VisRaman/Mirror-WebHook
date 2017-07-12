@@ -159,9 +159,9 @@ restService.listen((process.env.PORT || 8000), function() {
 function responseSerialization(body)
 {
     var resFinal = {};
-    if (body!=null) {
-        var jsonBody = JSON.parse(body);
-
+    var jsonBody = JSON.parse(body);
+    if (!Object.keys(jsonBody).length === 0) {
+        
         for (var key in jsonBody) {
             if (jsonBody[key] != null) {
                 var objArr = [];
