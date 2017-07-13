@@ -160,8 +160,8 @@ function responseSerialization(body)
 {
     var resFinal = {};
     var jsonBody = JSON.parse(body);
-    if (!Object.keys(jsonBody).length === 0) {
-
+    if (jsonBody.length>0) 
+    {
         for (var key in jsonBody) {
             if (jsonBody[key] != null) {
                 var objArr = [];
